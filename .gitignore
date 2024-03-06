@@ -1,0 +1,9 @@
+# created by virtualenv automatically
+
+photoblog/photoblog/__pycache__
+photoblog/db.sqlite3
+ptbg
+photoblog/blog/__pycache__
+photoblog/authentification/__pycache__
+photoblog/authentification/migrations
+photoblog/blog/migrations
