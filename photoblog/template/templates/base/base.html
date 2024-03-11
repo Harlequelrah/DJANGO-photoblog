@@ -1,0 +1,22 @@
+{% load static %}
+<html>
+    <head>
+        <title>FotoBlog</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body>
+        {% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+				{% endfor %}
+		</ul>
+		{% endif %}
+        <h1>FotoBlog</h1>
+        {% block content %}{% endblock content %}
+        {% if user.is_authenticated %}
+        <p>Vous êtes connecté en tant que {{request.user}}.<a href='{%  url 'logout' %}'>Se deconnecter</a></p>
+        <p>Voulez-vous <a href="{% url 'password_change' %}">changer votre mot de passe ?</a></p>
+        {% endif %}
+    </body>
+</html>

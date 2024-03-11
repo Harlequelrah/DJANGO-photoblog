@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentification',
     'blog',
+    'template'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,8 @@ ROOT_URLCONF = 'photoblog.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+ ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,8 +79,12 @@ WSGI_APPLICATION = 'photoblog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'photoblog',
+        'USER': 'Harlequin',
+        'PASSWORD': "Quinlehar0179",
+        'HOST': 'localhost',  # Ou l'adresse IP de votre serveur MySQL
+        'PORT': '3310',  # Le port par défaut de MySQL
     }
 }
 
@@ -99,13 +105,20 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    {
+        'NAME': 'authentification.validators.AlphaPasswordValidator',
+    },
+    {
+        'NAME': 'authentification.validators.ContainLetterValidator',
+    },
+
 ]
 
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-fr'
 
 TIME_ZONE = 'UTC'
 
@@ -117,9 +130,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'template/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL='authentification.User'
+LOGIN_URL='login'
+LOGIN_REDIRECT_URL='home'

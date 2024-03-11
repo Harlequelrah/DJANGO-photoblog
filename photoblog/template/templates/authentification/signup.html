@@ -1,0 +1,22 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h2> Inscription </h2>
+<form method="post" >
+  {% csrf_token %}
+  <!-- {% if form.errors %}
+  {{ form.errors }}
+{% endif %} -->
+  {% for field in form %}
+  {% if field.errors %}
+  <ul>
+    {% for error in field.errors %}
+    <li>{{error}}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  <p>{{field.label}}  {{field}}</p>
+  {% endfor %}
+  <button type="submit" >S’inscrire</button>
+
+</form>
+{% endblock content %}
