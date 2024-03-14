@@ -15,10 +15,13 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path,include
 import blog
+import gestion
 from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
-from authentification.views import CustomLoginView,logout_page,signup_page
+from authentification.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('',LoginPageView.as_view(),name='login'),
@@ -29,6 +32,7 @@ urlpatterns = [
     path('',CustomLoginView.as_view(),name='login'),
     path('logout/',logout_page,name='logout'),
     path('blog/',include('blog.urls')),
+    path('gestion/',include('gestion.urls')),
     path('change-password/',PasswordChangeView.as_view(
         template_name='authentification/password_change_form.html'),
         name='password_change'
@@ -37,6 +41,16 @@ urlpatterns = [
         template_name='authentification/password_change_done.html'),
         name='password_change_done'
     ),
-    path('signup',signup_page,name='signup'),	
+    path('signup/',signup_page,name='signup'),
+    path('mailtrap/<str:email>/',mailtrap,name='mailtrap'),
+    path('photo/profile/update/',photo_update,name='photo_profil_update'),
 
 ]
+if settings.DEBUG:
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+
+
+

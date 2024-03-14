@@ -132,10 +132,23 @@ USE_TZ = True
 
 STATIC_URL = 'template/static/'
 
+MEDIA_URL='/media/'
+MEDIA_ROOT='media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 AUTH_USER_MODEL='authentification.User'
+
 LOGIN_URL='login'
 LOGIN_REDIRECT_URL='home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_PORT = 2525
+EMAIL_HOST_USER = '3dd40e8b0a9ab1'
+EMAIL_HOST_PASSWORD = 'f0a28cd93606ab'
+EMAIL_USE_TLS = True
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'

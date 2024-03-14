@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'tableau.css' %}">
+{% endblock style %}
+{% block content %}
+<h1>Liste des tâches</h1>
+</ul>
+<table>
+    <tr>
+        {% for i in key %}
+        <td>{{i}}</td>
+        {% endfor %}
+    </tr>
+
+        {% for task in tasks %}
+        <tr>
+        <td>{{task.id}}</td>
+        <td>{{task.titre}}</td>
+        <td>{{task.description}}</td>
+        <td>{{task.statut}}</td>
+        <td>{{task.priorite}}</td>
+        <td>{{task.commentaire}}</td>
+        <td>{{task.date_echeance}}</td>
+        <td>{{task.date_debut}}</td>
+        <td>{{task.date_fin}}</td>
+        </tr>
+        {% endfor %}
+
+</table>
+
+{% endblock %}
+</table>

@@ -1,0 +1,45 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kalnia&display=swap');
+*{
+
+    font-family: 'Kalnia', serif;
+    margin:0;
+    padding:0;
+}
+*, ::before, ::after {
+        box-sizing: border-box;
+        margin : 0;
+        padding: 0;
+    }
+body{
+    height : 100vh;
+} */
+table{
+    border-collapse: collapse;
+    min-width: 400px;
+    width: auto;
+    box-shadow: 0 5px rgba(0,0,0,0.15);
+    cursor : pointer;
+    margin : 100px auto;
+    border : 1px solid midnightblue;
+}
+ th{
+    background-color: midnightblue;
+    color : #fff;
+    text-align: left;
+
+}
+th, td{
+    padding : 15px 20px;
+
+}
+tr, td, th{
+    border:1px solid #ddd;
+}
+tr:nth-child(even){
+    background-color: #cfcfcf;
+}
+tr:last-of-type{
+    border-bottom: 2px solid midnightblue;
+}
+

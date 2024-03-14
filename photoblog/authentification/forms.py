@@ -12,7 +12,10 @@ class SignupForm(UserCreationForm):
         model=get_user_model()
         fields=('username','email','first_name','last_name','role')
 
-
+class UserPPForm(forms.ModelForm):
+    class Meta:
+        model=get_user_model()
+        fields=['profile_photo']
 # from . import validators
 # class PostCodeForm(forms.Form):
 #     post_code = forms.CharField(max_length=10, validators=[validators.PostCodeValidator])
