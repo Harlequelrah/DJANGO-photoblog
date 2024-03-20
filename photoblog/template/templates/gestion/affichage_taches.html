@@ -1,8 +1,8 @@
 {% extends 'base/base.html' %}
 {% load static %}
-{% block style %}
+{% block stylesheet %}
 <link rel="stylesheet" href="{% static 'tableau.css' %}">
-{% endblock style %}
+{% endblock stylesheet %}
 {% block content %}
 <h1>Liste des tâches</h1>
 </ul>
@@ -16,6 +16,7 @@
         {% for task in tasks %}
         <tr>
         <td>{{task.id}}</td>
+        <td>{{task.auteur}}</td>
         <td>{{task.titre}}</td>
         <td>{{task.description}}</td>
         <td>{{task.statut}}</td>
@@ -23,7 +24,10 @@
         <td>{{task.commentaire}}</td>
         <td>{{task.date_echeance}}</td>
         <td>{{task.date_debut}}</td>
+        {% if task.date_fin %}
         <td>{{task.date_fin}}</td>
+        {% else %}
+        <td>Non defini</td>
         </tr>
         {% endfor %}
 

@@ -1,0 +1,14 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h2>UPLOADER DES PHOTOS</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{numberform}}
+    <button name='num' type='submit'>Soumettre ce nombre</button>
+    {{formset.management_form}}
+    {% for form in formset %}
+    {{form.as_p}}
+    {% endfor %}
+    <button name='submit' type='submit'>Publier</button>
+</form>
+{% endblock content %}

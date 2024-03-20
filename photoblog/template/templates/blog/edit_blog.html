@@ -1,0 +1,59 @@
+{% extends 'base/base.html' %}
+{% block content %}
+<h2> Modification du billet</h2>
+<form method="post">
+    {{edit_form.as_p}}
+    {% csrf_token %}
+    <button  name="edit_blog" id="edit_blog">Modifier</button>
+    <button  class="cancel-btn">Annuler</button>
+    <button  name="delete_blog" id="delete_blog">Supprimer</button>
+</form>
+{% endblock content %}
+{% block javascript %}
+<script>
+    $(document).ready(function () {
+        var edit_blog = $("#edit_blog");
+        var delete_blog = $("#delete_blog");
+        edit_blog.on('click', function (event) {
+            if(edit_blog.text()=='Modifier'){
+                event.preventDefault();
+                if (confirm("Etes vous sûre de vouloir appliquer ces modifications")) {
+                    edit_blog.css('background-color', 'green');
+                    edit_blog.text('Valider Modification');
+                }
+            }
+            else{
+                edit_blog.attr('type', 'submit');
+            }
+
+        })
+
+        $("cancel-button").on('click', function () {
+            if (confirm("Etes vous sûre de vouloir annuler")) {
+                edit_blog.removeAttr('type');
+                edit_blog.text('Modifier');
+                edit_blog.css('background-color', 'white');
+                delete_blog.removeAttr('type');
+                delete_blog.text('Supprimer');
+                delete_blog.css('background-color', 'white');
+
+            }
+        })
+
+        delete_blog.on('click', function (event) {
+            if(delete_blog.text()=='Supprimer'){
+                event.preventDefault();
+                if (confirm("Etes vous sûre de vouloir supprimer ce blog")) {
+                    delete_blog.css('background-color', 'red');
+                    delete_blog.text('Valider Suppression')
+                }
+            }
+            else{
+                delete_blog.attr('type', 'submit');
+            }
+
+        })
+    })
+</script>
+
+{% endblock javascript %}
