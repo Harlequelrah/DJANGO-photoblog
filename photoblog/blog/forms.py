@@ -16,4 +16,4 @@ class BlogForm(forms.ModelForm):
 # class DeleteBlogForm(forms.ModelForm):
 #     delete_blog=forms.BooleanField(initial=True,widget=forms.HiddenInput())
 class NumberPhoto(forms.Form):
-    number=forms.IntegerField(widget=forms.NumberInput(attrs={'min': 1, 'max': 10}))
+    number=forms.IntegerField(widget=forms.NumberInput(attrs={'min': 1, 'max': 10}),required=False)

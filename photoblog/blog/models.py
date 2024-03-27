@@ -14,7 +14,7 @@ class Photo(models.Model):
         image.thumbnail=(self.IMAGE_MAX_SIZE)
         image.save(self.image.path)
     def save(self,*args,**kwargs):
-        super.save(self,*args,**kwargs)
+        super().save(*args,**kwargs)
         self.resize_image()
     def __str__(self):
         return  f"{self.caption}"
