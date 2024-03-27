@@ -4,8 +4,33 @@
 <link rel="stylesheet" href="{% static 'tableau.css' %}">
 {% endblock stylesheet %}
 {% block content %}
+
+
+<p> rechercher une tache </p>
+<form method="POST">
+    {{form.as_p}}
+    {% csrf_token %}
+    <button type="Submit" name='search'>Chercher</button>
+</form>
+
+{% if id == 0 %}
 <h1>Liste des tâches</h1>
+{% endif %}
+{% if id != 0 %}
+{% if tasks|length == 1%}
+<a href="{% url 'change_task' id %}" >Modifier la tache</a>
+<form method="POST">
+    {% csrf_token %}
+    <button  id='supp' name="supp" type='button'>Supprimer</button>
+    <button type="button" style='display:none;background-color:blue;' id='annuler'>Annuler</button>
+</form>
+{% endif %}
+{% comment %} {% if not tasks.0 %}
+<ul class="messages">
+    <li  class="error"> La tâche n ' a pas été trouvée</li>
 </ul>
+{% else %} {% endcomment %}
+{% if tasks.0 %}
 <table>
     <tr>
         {% for i in key %}
@@ -13,8 +38,8 @@
         {% endfor %}
     </tr>
 
-        {% for task in tasks %}
-        <tr>
+    {% for task in tasks %}
+    <tr>
         <td>{{task.id}}</td>
         <td>{{task.auteur}}</td>
         <td>{{task.titre}}</td>
@@ -28,10 +53,46 @@
         <td>{{task.date_fin}}</td>
         {% else %}
         <td>Non defini</td>
-        </tr>
-        {% endfor %}
+        {% endif %}
+    </tr>
+    {% endfor %}
 
 </table>
-
+{% endif %}
+{% endif %}
 {% endblock %}
-</table>
+{% block javascript %}
+<script>
+    $(document).ready(function(){
+        var supp = $('#supp');
+        var annuler = $('#annuler');
+        supp.on('click', function(){
+            if(supp.text()=='Supprimer'){
+                event.preventDefault();
+                if(confirm("Etes vous sure de bien vouloir supprimer cette tache ?")){
+                    supp.css('background-color','green');
+                    supp.text('Valider');
+                    annuler.css('display','inline-block');
+                }
+            }
+            else{
+                supp.attr('type','submit');
+            }
+        })
+
+        annuler.on('click',function(){
+            if (confirm("Etes vous sûre de vouloir annuler")) {
+                supp.text('Supprimer');
+                annuler.css('display','none')
+                supp.attr('type','button');
+                supp.css('background-color','white');
+            }
+        })
+
+
+
+
+    })
+
+</script>
+{% endblock javascript %}

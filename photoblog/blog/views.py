@@ -5,12 +5,48 @@ from django.forms import formset_factory
 from django.contrib import messages
 # Create your views here.
 from . import forms,models
+from django.db.models import Q
+from itertools import chain
+
+
 
 @login_required
+@permission_required(['blog.view_photo','blog.view_blog'],raise_exception=True)
 def home(request):
-    photos=models.Photo.objects.all()
-    blogs=models.Blog.objects.all()
-    return render(request,"blog/home.html",context={'photos':photos,'blogs':blogs})
+    # Photo.objects.filter(blog__contributors__first_name='Peter')
+    # photos=models.Photo.objects.all()
+    # blogs=models.Blog.objects.all()
+    # blogs = blogs.order_by('-date_created') inverser l ordre des sequences
+    blogs=models.Blog.objects.filter(
+        Q(contributors__in=request.user.follows.all()) |
+        Q(starred=True)|
+        Q(contributors=request.user)
+    )
+    photos=models.Photo.objects.filter(
+        Q(uploader__in=request.user.follows.all()) |
+        Q(uploader=request.user)
+    ).exclude(
+            blog__in=blogs
+        )
+
+    blogs_and_photos=sorted(
+
+        chain(blogs,photos),
+        key= lambda instance:instance.date_created,
+        reverse=True
+    )
+    return render(request,"blog/home.html",context={'blogs_and_photos':blogs_and_photos})
+    # return render(request,"blog/home.html",context={'photos':photos,'blogs':blogs})
+
+@login_required
+@permission_required('blog.view_photo',raise_exception=True)
+def photo_feed(request):
+    photos=models.Photo.objects.filter(
+        uploader__in=request.user.follows.all()
+    ).order_by('-date_created')
+    return render(request,'blog/photo_feed.html',context={"photos":photos})
+
+
 
 @login_required
 @permission_required('blog.add_photo',raise_exception=True)
@@ -42,6 +78,7 @@ def blog_and_photo_upload(request):
             blog.author=request.user
             blog.photo=photo
             blog.save()
+            blog.contributors.add(request.user,through_defaults={'contribution':'Acteur principale'})
             messages.success(request,"Votre billet a été enreistré avec succès")
             return redirect('home')
     context={

@@ -18,13 +18,16 @@ class Photo(models.Model):
         self.resize_image()
     def __str__(self):
         return  f"{self.caption}"
+    # def get_model_type(self):
+    #     return 'Photo'
 
 
 class Blog(models.Model):
     photo=models.ForeignKey(Photo,null=True,on_delete=models.SET_NULL,blank=True)
     title=models.CharField(max_length=128,verbose_name='titre')
     content=models.CharField(max_length=5000,verbose_name='contenue')
-    author=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    # author=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True)
+    contributors=models.ManyToManyField(settings.AUTH_USER_MODEL,through='BlogContributor',related_name='contributions')
     date_created = models.DateTimeField(auto_now_add=True)
     starred = models.BooleanField(default=False)
     word_count=models.IntegerField(null=True,verbose_name='nombre de mot')
@@ -38,3 +41,14 @@ class Blog(models.Model):
 
     def __str__(self):
         return  f"{self.title}"
+    # def get_model_type(self):
+    #     return 'Blog'
+
+
+class BlogContributor(models.Model):
+    contributor=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
+    blog=models.ForeignKey(Blog,on_delete=models.CASCADE)
+    contribution=models.CharField(max_length=255,blank=True)
+
+    class Meta:
+        unique_together=('contributor','blog')

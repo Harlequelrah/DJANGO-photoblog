@@ -7,5 +7,6 @@ urlpatterns = [
     path('<int:blog_id>',view_blog,name='view_blog'),
     path('<int:blog_id>/edit/',edit_blog,name='edit_blog'),
     path('multiple/photo/upload/<int:number>/',upload_multiple_photo,name='upload_multiple_photo'),
+    
 
 ]

@@ -69,7 +69,15 @@ def photo_update(request):
     return render(request,'blog/photo_profile_update.html',context={'form':form})
 
 
-
+@login_required
+def follow_users(request):
+    form=FollowUsersForm(instance=request.user)
+    if request.method=='POST':
+        form=FollowUsersForm(request.POST,instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    return render(request,'blog/follow_users_form.html',context={'form':form})
 # class LoginPageView(View,LoginRequiredMixin):
 #     template_name='authentification/login.html'
 #     form_class=LoginForm

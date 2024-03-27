@@ -18,8 +18,6 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path,include
-import blog
-import gestion
 from django.contrib.auth.views import PasswordChangeView,PasswordChangeDoneView
 from authentification.views import *
 urlpatterns = [
@@ -44,6 +42,8 @@ urlpatterns = [
     path('signup/',signup_page,name='signup'),
     path('mailtrap/<str:email>/',mailtrap,name='mailtrap'),
     path('photo/profile/update/',photo_update,name='photo_profil_update'),
+    path('follow-users/',follow_users,name='follow_users'),
+
 
 ]
 if settings.DEBUG:
