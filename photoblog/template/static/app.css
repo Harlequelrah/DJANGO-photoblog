@@ -32,7 +32,7 @@ html {
 
 /* Style page content */
 .main {
-    margin-left: 230px; /* Same as the width of the sidebar */
+    margin-left: 240px; /* Same as the width of the sidebar */
     padding: 20px;
 }
 
@@ -56,3 +56,4 @@ html {
     width: 80%;
     border-radius: 5px;
 }
+

@@ -21,7 +21,7 @@ def get_posted_at_display(context,time):
         return f"Posté il y a {minutes} minutes"
     elif delta.total_seconds()<3600*24:
         heures=int(delta.total_seconds()/3600)
-        return f"Posté il y a {minutes} minutes"
+        return f"Posté il y a {heures} minutes"
     else:
         return time.strftime('Posté à %H:%M:%S %Y-%m-%d ')
 

@@ -7,17 +7,25 @@ class Photo(models.Model):
     caption=models.CharField(max_length=128,blank=True,verbose_name='legende')
     uploader=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     date_created=models.DateTimeField(auto_now_add=True)
-    IMAGE_MAX_SIZE=(800,800)
-
+    IMAGE_MAX_SIZE=(700,700)
+    # image.convert('RGB')
     def resize_image(self):
-        image=Image.open(self.image)
-        image.thumbnail=(self.IMAGE_MAX_SIZE)
-        image.save(self.image.path)
+        image = Image.open(self.image)
+        # Convertir l'image en mode RGB si nécessaire
+        if image.mode != 'RGB':
+            image = image.convert('RGB')
+        # Redimensionner l'image
+        image.thumbnail(self.IMAGE_MAX_SIZE)
+        # Enregistrer l'image
+        image.save(self.image.path,quality=90)
+
     def save(self,*args,**kwargs):
         super().save(*args,**kwargs)
         self.resize_image()
+
+
     def __str__(self):
-        return  f"{self.caption}"
+        return self.caption if self.caption else "Sans légende"
     # def get_model_type(self):
     #     return 'Photo'
 
@@ -37,7 +45,7 @@ class Blog(models.Model):
 
     def save(self, *args, **kwargs):
         self.word_count=self._get_word_count()
-        super.save(self,*args,**kwargs)
+        super().save(*args,**kwargs)
 
     def __str__(self):
         return  f"{self.title}"

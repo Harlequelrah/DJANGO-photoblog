@@ -6,6 +6,6 @@
         {% csrf_token %}
         <button type="submit" >Publier</button>
     </form>
-    <p>Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p>
+    {% comment %} <p>Pas encore membre ? <a href="{% url 'signup' %}">Inscrivez-vous maintenant !</a></p> {% endcomment %}
 {% endblock content %}
 

@@ -1,0 +1,23 @@
+<style>
+span a {
+    margin-right:5px;
+    margin-left:5px;
+}
+</style>
+<span>
+    {% if page_obj.has_previous %}
+    <span>
+        <a href="?page=1">« première <a/>
+        <a href="?page={{page_obj.previous_page_number}}">précédente <a/>
+    </span>
+    {% endif %}
+    <span>
+        Page {{page_obj.number}} sur {{page_obj.paginator.num_pages}}.
+    </span>
+    {% if page_obj.has_next %}
+    <span>
+        <a href="?page={{page_obj.next_page_number}}">suivant <a/>
+        <a href="?page={{page_obj.paginator.num_pages}}"> dernière »<a/>
+    </span>
+    {% endif %}
+</span>

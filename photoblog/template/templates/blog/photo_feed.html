@@ -1,19 +1,11 @@
-
-
 {% extends 'base/base.html' %}
 {% load blog_extras %}
 {% block content %}
     <h2>Votre flux</h2>
     <div class="grid-container">
-        {% for instance in page_obj %}
-            {% if instance|model_type == 'Blog' %}
-                {% include 'blog/partials/blog_snippet.html' with blog=instance %}
-            {% elif instance|model_type == 'Photo' %}
+    {% for instance in page_obj %}
                 {% include 'blog/partials/photo_snippet.html' with photo=instance %}
-            {% endif %}
-        {% endfor %}
-
-    </div>
+    {% endfor %}
+</div>
     {% include 'blog/partials/pied_de_page.html' %}
-
 {% endblock content %}

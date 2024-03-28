@@ -7,4 +7,4 @@ photoblog/blog/__pycache__
 photoblog/authentification/__pycache__
 photoblog/authentification/migrations
 photoblog/blog/migrations
-
+photoblog/media

@@ -7,6 +7,7 @@ from django.contrib import messages
 from . import forms,models
 from django.db.models import Q
 from itertools import chain
+from django.core.paginator import Paginator
 
 
 
@@ -35,7 +36,10 @@ def home(request):
         key= lambda instance:instance.date_created,
         reverse=True
     )
-    return render(request,"blog/home.html",context={'blogs_and_photos':blogs_and_photos})
+    paginator=Paginator(blogs_and_photos,6)
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+    return render(request,"blog/home.html",context={'page_obj':page_obj})
     # return render(request,"blog/home.html",context={'photos':photos,'blogs':blogs})
 
 @login_required
@@ -44,7 +48,10 @@ def photo_feed(request):
     photos=models.Photo.objects.filter(
         uploader__in=request.user.follows.all()
     ).order_by('-date_created')
-    return render(request,'blog/photo_feed.html',context={"photos":photos})
+    paginator=Paginator(photos,8)
+    page_number=request.GET.get('page')
+    page_obj=paginator.get_page(page_number)
+    return render(request,'blog/photo_feed.html',context={"page_obj":page_obj})
 
 
 
